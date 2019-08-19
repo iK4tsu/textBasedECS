@@ -14,9 +14,13 @@ class Hero : Entity
 {
 	public this()
 	{
+		super([new HealthComponent(20, 20)], [HERO]);
+	}
+
+	public void init()
+	{
 		writeln("Before we start, tell me your name.\n");
 		string name = readln.chomp;
-		super([new HealthComponent(20, 20)], [HERO], name);
 		writeln("Hello ", name, "! I hope you have fun in trying to survive in this horrible game.");
 	}
 
