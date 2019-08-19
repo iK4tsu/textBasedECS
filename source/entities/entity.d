@@ -16,13 +16,14 @@ class Entity
 	protected System[SystemType] systems;
 	protected Game game;
 	protected EntityType[] types;
-	protected const string name;
+	protected string name;
 
-	public this(Component[] components, EntityType[] _types, const string _name)
+	public this(Component[] components, EntityType[] _types) { this(components, _types, "no name"); }
+	public this(Component[] components, EntityType[] _types, string _name)
 	{
 		addComponent(components);
 		addTypes(_types);
-		name = _name;
+		setName(_name);
 	}
 
 	public void update()
@@ -107,6 +108,7 @@ class Entity
 	public void setGame(Game _game) { game = _game; }
 	public Game getGame() { return game; }
 
+	public void setName(const string _name) { name = _name; }
 	public const string getName() { return name; }
 
 
