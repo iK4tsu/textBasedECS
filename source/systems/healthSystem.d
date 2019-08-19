@@ -47,7 +47,6 @@ class HealthSystem : System
 	{
 		if (canFind(_entity.getTypes, HERO) && health.getCurHp <= 0)
 		{
-			writeln("Thank you for playing!");
 			_entity.getGame.gameOver;
 		}
 		else if (health.getCurHp > health.getMaxHp)
