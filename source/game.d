@@ -33,6 +33,8 @@ class Game
 
 		h.addSystem([s]);
 		s.addEntity(h);
+
+		h.init();
 	}
 
 	public void update()
