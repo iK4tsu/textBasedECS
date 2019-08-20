@@ -26,6 +26,8 @@ class Entity
 		setName(_name);
 	}
 
+	public void init() {}
+
 	public void update()
 	{
 		
