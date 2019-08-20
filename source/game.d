@@ -5,6 +5,7 @@ import systems.system;
 import entities.hero;
 import systems.healthSystem;
 import preGameMenu;
+import factory;
 
 class Game
 {
@@ -15,26 +16,15 @@ class Game
 	public this()
 	{
 		over = false;
+
 	}
 
 	public void init()
 	{
 		display();
-		import systems.system;
-		import systems.healthSystem;
-		import entities.hero;
-		Hero h = new Hero();
-		HealthSystem s = new HealthSystem();
-
-		this.entities ~= h;
-		h.setGame(this);
-
-		this.systems ~= s;
-
-		h.addSystem([s]);
-		s.addEntity(h);
-
-		h.init();
+		build(entities, systems);
+		config(this);
+		initAll(entities);
 	}
 
 	public void update()
@@ -54,6 +44,8 @@ class Game
 	public bool isOver() { return this.over; }
 
 	public void gameOver() { this.over = true; }
+
+	public Entity[] getEntities() { return entities; }
 }
 
 
