@@ -5,36 +5,33 @@ import systems.system;
 import entities.hero;
 import systems.healthSystem;
 import preGameMenu;
+import factory;
+import input.decoder;
 
 class Game
 {
 	private Entity[] entities;
 	private System[] systems;
 	private bool over;
+	private bool initialized = false;
+	public Decoder decoder;
 
 	public this()
 	{
 		over = false;
+		decoder = new Decoder(this);
 	}
 
 	public void init()
 	{
-		display();
-		import systems.system;
-		import systems.healthSystem;
-		import entities.hero;
-		Hero h = new Hero();
-		HealthSystem s = new HealthSystem();
+		display(this);
 
-		this.entities ~= h;
-		h.setGame(this);
-
-		this.systems ~= s;
-
-		h.addSystem([s]);
-		s.addEntity(h);
-
-		h.init();
+		if (!isOver && isInitialized)
+		{
+			build(entities, systems);
+			config(this);
+			initAll(entities);
+		}
 	}
 
 	public void update()
@@ -51,9 +48,15 @@ class Game
 		}
 	}
 
-	public bool isOver() { return this.over; }
+	public const bool isOver() { return over; }
 
-	public void gameOver() { this.over = true; }
+	public void gameOver() { over = true; }
+
+	public Entity[] getEntities() { return entities; }
+
+	public const bool isInitialized() { return initialized; }
+
+	public void initialize() { initialized = true; }
 }
 
 

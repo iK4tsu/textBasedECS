@@ -6,37 +6,53 @@ import components.healthComponent;
 import systems.healthSystem;
 import entities.entityType;
 import components.componentType;
+import input.decoder;
 
-import std.stdio  : writeln, readln;
+import std.stdio  : writeln, readln, write;
 import std.string : chomp;
+import std.conv   : to;
 
 class Hero : Entity
 {
+	private Decoder decoder;
+
 	public this()
 	{
 		super([new HealthComponent(20, 20)], [HERO]);
 	}
 
-	public void init()
+	override public void init()
 	{
+		setDecoder(game.decoder);
 		writeln("Before we start, tell me your name.\n");
-		string name = readln.chomp;
+		string name = getInput;
 		writeln("Hello ", name, "! I hope you have fun in trying to survive in this horrible game.");
 	}
 
 	override public void update()
 	{
-		import std.stdio : readln, writeln;
-		import std.string : chomp;
-		import std.conv : to;
-		writeln("Write 'die' to die.\n");
-		switch (readln.chomp)
+		writeln("Write '\\die' to die.\n");
+		decoder.parser.parseGameCommands(decoder.parser.parserSplitter(decoder.getInput));
+	}
+
+	public string getInput()
+	{
+		write("> ");
+		return readln.chomp;
+	}
+
+	public void setDecoder(Decoder _decoder)
+	{
+		if (decoder is null)
 		{
-			case "die":
-				(to!(HealthComponent)(getComponent(HEALTH))).setCurHp(0);
-				break;
-			default:
+			decoder = _decoder;
+			_decoder.setHero(this);
 		}
+	}
+
+	public void setHp(int hp)
+	{
+		to!(HealthComponent)(getComponent(HEALTH)).setCurHp(hp);
 	}
 }
 

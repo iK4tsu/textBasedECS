@@ -9,7 +9,7 @@ void main()
 	do
 	{
 		game.update;
-	} while(!game.isOver);
+	} while(!game.isOver && game.isInitialized);
 
 	import std.stdio : writeln;
 	writeln("Thank you for playing!");
