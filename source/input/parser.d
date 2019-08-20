@@ -15,25 +15,25 @@ class Parser
 {
 	void parseGameCommands(string[] _gameCommands)
 	{
-		if (_gameCommands.length == 1)
+		string gc = parseToUpper(_gameCommands[0]);
+
+		foreach(_command; (__traits(allMembers, GameCommands)))
 		{
-			string gc = parseToUpper(_gameCommands[0]);
-
-			foreach(_command; (__traits(allMembers, GameCommands)))
+			string cts = to!(string)(_command);
+			if (cts.split("_").length == 1)
 			{
-				string cts = to!(string)(_command);
-				if (cts.split("_").length == 1)
+				//cts = tr(cts, "_", " ");
+				cts = '\\' ~ cts;
+
+				assert(cts[0] == '\\');
+
+				if (cmp(cts, gc) == 0)
 				{
-					cts = tr(cts, "_", " ");
-					cts = '\\' ~ cts;
-
-					assert(cts[0] == '\\');
-
-					if (cmp(cts, gc) == 0)
-					{
-						decoder.processGameCommand(to!(GameCommands)(_command));
-						return;
-					}
+					if (_gameCommands.length == 1)
+						decoder.processGameCommand(_command);
+					else
+						decoder.processGameCommand(_command, _gameCommands[1 .. $]);
+					return;
 				}
 			}
 		}

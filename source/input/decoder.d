@@ -8,13 +8,15 @@ import entities.hero;
 
 
 import std.stdio  : writeln, write, readln;
-import std.string : chomp;
+import std.string : chomp, capitalize;
+import std.array  : join;
+import std.conv   : to;
 
 class Decoder
 {
-	public void processGameCommand(GameCommands _gameCommand)
+	public void processGameCommand(string _gameCommand)
 	{
-		final switch(_gameCommand)
+		final switch (to!(GameCommands)(_gameCommand))
 		{
 			case gameSTART:
 				if (!game.isInitialized)
@@ -39,6 +41,22 @@ class Decoder
 			case gameINSURANCE:
 				getInsurance;
 				break;
+
+			case gamePRINT:
+				writeln(capitalize(_gameCommand), " what?\n");
+		}
+	}
+
+	public void processGameCommand(string _gameCommand, string[] _words)
+	{
+		switch (to!(GameCommands)(_gameCommand))
+		{
+			case gamePRINT:
+				string s = _words.join(" ");
+				writeln(s);
+				break;
+			default:
+				writeln("Sorry but that command doesn't take parameters.\n");
 		}
 	}
 
