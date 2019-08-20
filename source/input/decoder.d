@@ -8,7 +8,7 @@ import entities.hero;
 
 
 import std.stdio  : writeln, write, readln;
-import std.string : chomp, capitalize;
+import std.string : chomp, capitalize, tr;
 import std.array  : join;
 import std.conv   : to;
 
@@ -57,6 +57,25 @@ class Decoder
 				break;
 			default:
 				writeln("Sorry but that command doesn't take parameters.\n");
+		}
+	}
+
+	public void processVerb(string _verb)
+	{
+		final switch (to!(Verbs)(_verb))
+		{
+			case GO:
+				writeln(capitalize(_verb), " where?");
+				break;
+
+			case PICK:
+				writeln(tr(capitalize(_verb), "_", " "), " what?");
+				break;
+
+			case OPEN:
+			case EAT:
+				writeln(capitalize(_verb), " what?");
+				break;
 		}
 	}
 
