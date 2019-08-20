@@ -17,7 +17,7 @@ class Hero : Entity
 		super([new HealthComponent(20, 20)], [HERO]);
 	}
 
-	public void init()
+	override public void init()
 	{
 		writeln("Before we start, tell me your name.\n");
 		string name = readln.chomp;
