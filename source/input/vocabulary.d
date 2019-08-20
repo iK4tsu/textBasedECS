@@ -23,3 +23,20 @@ alias gameDIE       = GameCommands.DIE;
 alias gameKILL      = GameCommands.KILL;
 alias gameINSURANCE = GameCommands.INSURANCE;
 alias gamePRINT     = GameCommands.PRINT;
+
+
+enum Verbs : uint
+{
+	GO      = 0,
+	WALK    = 0,
+	PICK_UP = 1,
+	PICK    = 1,
+	GRAB    = 1,
+	OPEN    = 2,
+	EAT     = 3
+}
+
+alias GO   = Verbs.GO;
+alias PICK = Verbs.PICK;
+alias OPEN = Verbs.OPEN;
+alias EAT  = Verbs.EAT;

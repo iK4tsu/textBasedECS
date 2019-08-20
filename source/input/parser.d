@@ -9,6 +9,7 @@ import std.uni       : toUpper;
 import std.conv      : to;
 import std.algorithm : cmp;
 import std.string    : tr;
+import std.stdio     : writeln;
 import std.traits;
 
 class Parser
@@ -37,6 +38,41 @@ class Parser
 				}
 			}
 		}
+	}
+
+	void parseVerbs(string[] _gameAction)
+	{
+		string verb = parseToUpper(_gameAction[0]);                           // all the singular verbs, ex: go | grab | open
+		string __verb;
+
+		if (_gameAction.length > 1)
+			__verb = verb ~ "_" ~ parseToUpper(_gameAction[1]);               // complex verbs, ex: pick up
+
+		foreach(_verb; (__traits(allMembers, Verbs)))
+		{
+			if ((_verb.split("_")).length == 1 && cmp(_verb, verb) == 0)
+			{
+				if (_gameAction.length == 1)
+					decoder.processVerb(_verb);
+				else {}
+				return;
+			}
+			else if (cmp(_verb, __verb) == 0)
+			{
+				if (_gameAction.length == 2)
+					decoder.processVerb(_verb);
+				else {}
+				return;
+			}
+		}
+	}
+
+	void parseString(string command)
+	{
+		if (command[0] == '\\')
+			parseGameCommands(parserSplitter(command));
+		else
+			parseVerbs(parserSplitter(command));
 	}
 
 	string[] parserSplitter(string command)

@@ -32,7 +32,7 @@ class Hero : Entity
 	override public void update()
 	{
 		writeln("Write '\\die' to die.\n");
-		decoder.parser.parseGameCommands(decoder.parser.parserSplitter(decoder.getInput));
+		decoder.parser.parseString(decoder.getInput);
 	}
 
 	public string getInput()
