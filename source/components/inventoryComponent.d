@@ -13,11 +13,12 @@ class InventoryComponent : Component
 	private bool full;
 
 
-	public this() { this(null, null, 0); }
-	public this(Entity owner, Entity[] _objects, uint space)
+	public this(uint _space) { this(null, _space); }
+	public this(Entity[] _objects, uint _space)
 	{
 		super(INVENTORY);
 		addObjects(_objects);
+		setSpace(_space);
 	}
 
 	public void setObjects(Entity[] _objects) { objects = _objects; }
@@ -53,11 +54,14 @@ class InventoryComponent : Component
 	{
 		return objects.dup;
 	}
+
+	public void setSpace(uint _space) { space = _space; }
+	public uint getSpace() { return space; }
 }
 
 unittest
 {
-	InventoryComponent inv = new InventoryComponent(null, null, 0);
+	InventoryComponent inv = new InventoryComponent(50);
 
-	assert(typeid(inv) == typeid(InventoryComponent));
+	assert(inv.getSpace	== 50);
 }
