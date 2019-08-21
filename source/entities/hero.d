@@ -50,10 +50,9 @@ class Hero : Entity
 		}
 	}
 
-	public void setHp(int hp)
-	{
-		to!(HealthComponent)(getComponent(HEALTH)).setCurHp(hp);
-	}
+	public void setHp(int hp) { getHealthComponent.setCurHp(hp); }
+
+	public HealthComponent getHealthComponent() { return to!(HealthComponent)(getComponent(HEALTH)); }
 }
 
 
@@ -61,8 +60,8 @@ unittest
 {
 	import std.conv : to;
 
-	Entity hero = new Hero();
+	Hero hero = new Hero();
 
-	assert(to!(HealthComponent)(hero.getComponent(HEALTH)).getCurHp == 20);
+	assert(hero.getHealthComponent.getCurHp == 20);
 	assert(hero.getComponent(PICKABLE) is null);
 }

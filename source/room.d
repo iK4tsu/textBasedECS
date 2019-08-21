@@ -3,37 +3,30 @@ module room;
 import entities.entity;
 import components.inventoryComponent;
 import entities.entityType;
+import components.componentType;
 
 
 import std.algorithm : cmp, remove;
+import std.conv      : to;
 
 class Room : Entity
 {
-	public this(string name) { super(null, [ROOM], name); }
-	//public this(InventoryComponent _inventory, string name)
-	//{
-	//	super([_inventory], [ROOM], name);
-	//}
+	public this(string _name)
+	{ 
+		super(null, [ROOM], _name);
+	}
 
-	public void setInventory(InventoryComponent _inventory) { addComponent(_inventory); }
-	//public InventoryComponent getInventory() { return get!(new InventoryComponent()); }
+	public InventoryComponent getInventory() { return to!(InventoryComponent)(getComponent(INVENTORY)); }
 }
 
 
 unittest
 {
-	import entities.bread;
-
 	Room shelter = new Room("shelter");
-	InventoryComponent shelterInv = new InventoryComponent(shelter, null, 2);
+	InventoryComponent shelterInv = new InventoryComponent(2);
 
 	shelter.addComponent(shelterInv);
 
-	Bread bread = new Bread();
-	shelterInv.addObjects([bread]);
-
-	//assert(shelter.getInventory == shelterInv);
+	assert(shelter.getInventory == shelterInv);
 	assert(shelterInv.getEntity == shelter);
-	assert(shelterInv.getObjects.length == 1);
-	assert(shelterInv.getObjects[0] == bread);
 }
