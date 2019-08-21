@@ -18,20 +18,21 @@ class Entity
 	protected EntityType[] types;
 	protected string name;
 
-	public this(Component[] components, EntityType[] _types) { this(components, _types, "no name"); }
-	public this(Component[] components, EntityType[] _types, string _name)
+
+	public this(EntityType _type, string _name) { this(null, [_type], _name); }
+	public this(Component _component, string _name) { this([_component], null, _name); }
+	public this(Component _component, EntityType _type, string _name) { this([_component], [_type], _name); }
+	public this(Component[] _components, EntityType _type, string _name) { this(_components, [_type], _name); }
+	public this(Component[] _components, EntityType[] _types) { this(_components, _types, "no name"); }
+	public this(Component[] _components, EntityType[] _types, string _name)
 	{
-		addComponent(components);
+		addComponent(_components);
 		addTypes(_types);
 		setName(_name);
 	}
 
 	public void init() {}
-
-	public void update()
-	{
-		
-	}
+	public void update() {}
 
 	public void addComponent(Component _component)
 	{
